@@ -10,10 +10,8 @@ const controlSearch = async () => {
 
     if (query) {
         state.search = new Search(query);
-
-        // 3) Prepare UI for results
-        //searchView.clearInput();
-        //searchView.clearResults();
+        searchView.clearInput();
+        searchView.clearResults();
         //renderLoader(elements.searchRes);
 
         await state.search.getResults();
