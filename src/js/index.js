@@ -1,26 +1,32 @@
 import Search from './models/Search';
 import Recipe from './models/Recipe';
 import * as searchView from './views/searchView';
-import {elements, renderLoader, clearLoader} from './views/base';
+import * as recipeView from './views/recipeView';
+import { elements, renderLoader, clearLoader } from './views/base';
 
 const state = {};
 
+
+//SEARCH CONTROLLER
 const controlSearch = async () => {
     const query = searchView.getInput();
-    //searchView.getInput();
 
     if (query) {
         state.search = new Search(query);
+
         searchView.clearInput();
         searchView.clearResults();
         renderLoader(elements.searchRes);
 
-        await state.search.getResults();
-
-        clearLoader();
-        //searchView.renderResults(state.search.result);
-
-        searchView.renderResults(state.search.result);
+        try {
+            await state.search.getResults();
+    
+            clearLoader();
+            searchView.renderResults(state.search.result);
+        } catch (err) {
+            alert('Something wrong with the search...');
+            clearLoader();
+        }
     }
 }
 
@@ -29,6 +35,7 @@ elements.searchForm.addEventListener('submit', e => {
     controlSearch();
 });
 
+
 elements.searchResPages.addEventListener('click', e => {
     const btn = e.target.closest('.btn-inline');
     if (btn) {
@@ -36,10 +43,11 @@ elements.searchResPages.addEventListener('click', e => {
         searchView.clearResults();
         searchView.renderResults(state.search.result, goToPage);
     }
-})
+});
 
 
 
+//RECIPE CONTROLLER
 const controlRecipe = async () => {
     const id = window.location.hash.replace('#', '');
 
@@ -47,8 +55,10 @@ const controlRecipe = async () => {
         recipeView.clearRecipe();
         renderLoader(elements.recipe);
 
-        if (state.search) searchView.highlightSelected(id);
+        // Highlight selected search item
+        //if (state.search) searchView.highlightSelected(id);
 
+        // Create new recipe object
         state.recipe = new Recipe(id);
 
         try {
@@ -61,7 +71,7 @@ const controlRecipe = async () => {
             clearLoader();
             recipeView.renderRecipe(
                 state.recipe,
-                state.likes.isLiked(id)
+                //state.likes.isLiked(id)
             );
 
         } catch (err) {
