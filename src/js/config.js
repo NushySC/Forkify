@@ -1,2 +1,2 @@
-export const APIKey = 'c8ace479b96f1d71b509f4e213a72ac6';
+export const APIKey = 'a2d9ac01f05597b5705065d887300065';
 export const proxy = 'https://cors-anywhere.herokuapp.com/';

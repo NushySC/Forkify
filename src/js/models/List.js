@@ -5,25 +5,23 @@ export default class List {
         this.items = [];
     }
 
-    addItem (count, unit, ingredient) {
+    addItem(count, unit, ingredient) {
         const item = {
-            //3rd party library for unique ids
             id: uniqid(),
             count,
-            unit, 
+            unit,
             ingredient
         }
         this.items.push(item);
+        return item;
     }
 
     deleteItem(id) {
-
         const index = this.items.findIndex(el => el.id === id);
         this.items.splice(index, 1);
     }
 
     updateCount(id, newCount) {
-        this.items.find(el => el.id === id).count == newCount;
+        this.items.find(el => el.id === id).count = newCount;
     }
 }
-
