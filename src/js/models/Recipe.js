@@ -1,5 +1,8 @@
 import axios from 'axios';
-import { APIKey, proxy } from '../config';
+import {
+    APIKey,
+    proxy
+} from '../config';
 
 export default class Recipe {
     constructor(id) {
@@ -49,7 +52,7 @@ export default class Recipe {
             let objIng;
             if (unitIndex > -1) {
                 const arrCount = arrIng.slice(0, unitIndex);
-                
+
                 let count;
                 if (arrCount.length === 1) {
                     count = eval(arrIng[0].replace('-', '+'));
@@ -82,7 +85,7 @@ export default class Recipe {
         this.ingredients = newIngredients;
     }
 
-    updateServings (type) {
+    updateServings(type) {
         const newServings = type === 'dec' ? this.servings - 1 : this.servings + 1;
 
         this.ingredients.forEach(ing => {
